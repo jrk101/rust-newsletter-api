@@ -3,6 +3,12 @@ name = "rust-newsletter-api"
 version = "0.1.0"
 edition = "2024"
 
+[lib]
+path="src/lib.rs"
+
+[[bin]]
+path="src/main.rs"
+name="rust_newsletter_api"
 [dependencies]
 actix-web = "4.14.0"
 tokio = { version = "1.52.3", features = ["macros", "rt-multi-thread"] }

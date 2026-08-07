@@ -1,14 +1,6 @@
-use actix_web::{web,App,HttpResponse,HttpRequest,Responder,HttpServer};
-
-async fn health_check(req:HttpRequest) -> impl Responder{
-    HttpResponse::Ok()
-}
+use rust_newsletter_api::run;
 
 #[tokio::main]
-async fn main() -> std::io::Result<()>{
-    HttpServer::new(||{
-        App::new().
-            route("/healthcheck",web::get().to(health_check))
-        }
-    ).bind("127.0.0.1:8000")?.run().await
+async fn main() -> std::io::Result<()> {
+    run().await
 }
