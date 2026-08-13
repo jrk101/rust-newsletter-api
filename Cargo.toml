@@ -11,4 +11,5 @@ path="src/main.rs"
 name="rust_newsletter_api"
 [dependencies]
 actix-web = "4.14.0"
+reqwest = "0.13.4"
 tokio = { version = "1.52.3", features = ["macros", "rt-multi-thread"] }
