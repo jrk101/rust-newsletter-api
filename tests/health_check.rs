@@ -22,6 +22,18 @@ async fn returns_200_ok_for_valid_data(){
     let address=spawn_app();
     let client=reqwest::Client::new();
     let body="name=joseph%20rithin&email=josephrithin2004%40gmail.com";
-    let response=client.post(&format!("{}/subscription",address)).header("Content-Type","application/x-www-form-urlencoder").body(body).send().await().expect("Faied to send data");
-    assert_eq!(200,response.status().as_u16);
+    let response=client.post(&format!("{}/subscribe",address)).header("Content-Type","application/x-www-form-urlencoded").body(body).send().await.expect("Faied to send data");
+    assert_eq!(200,response.status().as_u16());
+}
+
+#[tokio::test]
+async fn returns_400_for_missing_data(){
+    let address=spawn_app();
+    let client=reqwest::Client::new();
+    let test_results=vec![("name=joseph%20rithin","email is missing"),("mail=josephrithin2004%40gmail.com","Name is missing"),("","Both data is missing")];
+
+    for (invalid_body,error_msg) in test_results{
+        let response=client.post(&format!("{}/subscribe",address)).header("Content-Type","application/x-www-form-urlencoded").body(invalid_body).send().await.expect("failed");
+        assert_eq!(400,response.status().as_u16(),"{}",error_msg);
+    }
 }
