@@ -1,4 +1,3 @@
-use rust_newsletter_api::run;
 use std::net::TcpListener;
 
 #[tokio::test]
@@ -16,4 +15,13 @@ fn spawn_app()->String{
     let server=rust_newsletter_api::run(listener).expect("Binding failed");
     let _=tokio::spawn(server);
     format!("http://127.0.0.1:{}",port)
+}
+
+#[tokio::test]
+async fn returns_200_ok_for_valid_data(){
+    let address=spawn_app();
+    let client=reqwest::Client::new();
+    let body="name=joseph%20rithin&email=josephrithin2004%40gmail.com";
+    let response=client.post(&format!("{}/subscription",address)).header("Content-Type","application/x-www-form-urlencoder").body(body).send().await().expect("Faied to send data");
+    assert_eq!(200,response.status().as_u16);
 }
