@@ -1,4 +1,4 @@
 mod health_check;
-mod subscription;
+mod subscriptions;
 pub use health_check::health_check;
-pub use subscription::{FormData, subscribe};
+pub use subscriptions::{FormData, subscribe};

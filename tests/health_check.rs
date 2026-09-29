@@ -16,7 +16,7 @@ async fn health_check_works() {
 fn spawn_app() -> String {
     let listener = TcpListener::bind("127.0.0.1:0").expect("Binding failed");
     let port = listener.local_addr().unwrap().port();
-    let server = rust_newsletter_api::run(listener).expect("Binding failed");
+    let server = rust_newsletter_api::startup::run(listener).expect("Binding failed");
     let _ = tokio::spawn(server);
     format!("http://127.0.0.1:{}", port)
 }
