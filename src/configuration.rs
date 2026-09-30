@@ -12,3 +12,10 @@ pub struct DatabaseSettings {
     pub host: String,
     pub database_name: String,
 }
+
+pub fn get_configuration() -> Result<Settings, config::ConfigError> {
+    config::Config::builder()
+        .add_source(config::File::with_name("configuration"))
+        .build()?
+        .try_deserialize()
+}
